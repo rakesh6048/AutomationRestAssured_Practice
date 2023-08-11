@@ -1,0 +1,71 @@
+
+HTTP Request Methods Detail
+
+-----------------------------------------------------------GET Method------------------------------------------------------------------
+URL = Base URL/EndpointURL
+
+URL : https://reqres.in/api/users/2
+
+Response : {
+    "data": {
+        "id": 2,
+        "email": "janet.weaver@reqres.in",
+        "first_name": "Janet",
+        "last_name": "Weaver",
+        "avatar": "https://reqres.in/img/faces/2-image.jpg"
+    },
+    "support": {
+        "url": "https://reqres.in/#support-heading",
+        "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+    }
+}
+
+----------------------------------------------------------Post Method------------------------------------------------------------------
+
+URL = https://reqres.in/api/users
+
+Payload :  {
+              "name": "Rakesh",
+              "job": "SoftwareEngineer",
+              "skills": [
+              "Java",
+              "Python"
+              ],
+              "details": {
+              "companyName": "Photon",
+              "emailId": "rakes.s@gmail.com"
+    }
+}
+
+
+----------------------------------------------------------Put Method------------------------------------------------------------------
+
+URL = https://reqres.in/api/users/2
+
+Payload :  {
+              "name": "Mohan",
+              "job": "CivilEngineer",
+              "skills": [
+              "C",
+              "C++"
+              ],
+              "details": {
+              "companyName": "L&T",
+              "emailId": "mohan123@gmail.com"
+         }
+    }
+    
+ ----------------------------------------------------------Patch Method------------------------------------------------------------------
+
+URL = https://reqres.in/api/users/2
+
+Payload :  {
+    "name": "morpheus",
+    "job": "zion resident"
+}
+
+----------------------------------------------------------Delete Method------------------------------------------------------------------
+
+URL = https://reqres.in/api/users/2
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
