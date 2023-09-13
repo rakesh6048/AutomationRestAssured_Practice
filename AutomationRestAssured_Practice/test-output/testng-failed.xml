@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.api.testscripts.DynamicJsonScripts">
+      <class name="com.api.testscripts.GraphQLScripts">
         <methods>
-          <include name="addBook"/>
+          <include name="verifyGraphQLMutation"/>
         </methods>
-      </class> <!-- com.api.testscripts.DynamicJsonScripts -->
+      </class> <!-- com.api.testscripts.GraphQLScripts -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

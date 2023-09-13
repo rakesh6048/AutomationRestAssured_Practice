@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.api.utils.Library;
-import com.api.utils.PayLoad;
+import com.api.utils.Payloads;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -25,7 +25,7 @@ public class GooglePlaceAPITestScripts {
 		//Add the Place and validate
 		
 		String postResponse = given().log().all().queryParam("key", "qaclick").header("Content-Type", "application/json")
-		                 .body(PayLoad.addPlace())
+		                 .body(Payloads.addPlace())
 		                 .when().post("/maps/api/place/add/json")
 		                 .then().log().all().assertThat().statusCode(200).body("scope", equalTo("APP"))
 		                 .extract().response().asString();
@@ -62,7 +62,7 @@ public class GooglePlaceAPITestScripts {
 	   
 	   String getResponse = given().log().all().queryParam("key", "qaclick123").queryParam("placeID", placeID)
 	                       .when().get("/maps/api/place/get/json")
-	                       .then().log().all().assertThat().statusCode(200).body("name", equalTo("Raj Singh")).extract().response().asString();
+	                       .then().log().all().assertThat().statusCode(200).body("name", equalTo("Rajputana House")).extract().response().asString();
 			
 	    System.out.println(getResponse);
 	    
@@ -80,7 +80,7 @@ public class GooglePlaceAPITestScripts {
 	    					   .body("{\r\n"
 	    					   + "    \"place_id\":\""+placeID+"\"\r\n"
 	           		           + "}")
-	             .when().post("/maps/api/place/delete/json")
+	             .when().delete("/maps/api/place/delete/json")
 	             .then().log().all().assertThat().statusCode(200).body("status", equalTo("OK")).extract().response().asString();
 	    
 	    System.out.println(deleteResponse);
@@ -111,7 +111,7 @@ public class GooglePlaceAPITestScripts {
 		
 		//Add Place and validate the response data
 		String postResponse = given().log().all().queryParam("key", "qaclick123").header("Content-Type", "application/json")
-			                 .body(PayLoad.addPlace())
+			                 .body(Payloads.addPlace())
 			                 .when().post("/maps/api/place/add/json")
 			                 .then().log().all().assertThat().statusCode(200).body("scope", equalTo("APP"), "status" , equalTo("OK"))
 			                 .extract().response().asString();
@@ -144,7 +144,7 @@ public class GooglePlaceAPITestScripts {
 		//Get Place and validate the response data
 		String getResponse = given().log().all().queryParam("key", "qaclick123").queryParam("place_id", place_id)
 							.when().get("/maps/api/place/get/json")
-							.then().log().all().assertThat().statusCode(200).body("name", equalTo("Raj Singh"), "address", equalTo(newAddress)).extract().response().asString();
+							.then().log().all().assertThat().statusCode(200).body("name", equalTo("Rajputana House"), "address", equalTo(newAddress)).extract().response().asString();
 			
 		System.out.println(getResponse);
 		jsp = new JsonPath(getResponse);

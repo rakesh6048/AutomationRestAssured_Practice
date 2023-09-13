@@ -39,4 +39,9 @@ public class PojoTestScripts {
 		}
 		
 	}
+	
+	@Test
+	public void test() {
+		
+	}
 }

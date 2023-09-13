@@ -3,8 +3,6 @@ package com.api.testscripts;
 import org.testng.annotations.Test;
 
 import com.api.utils.Library;
-import com.api.utils.PayLoad;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -30,7 +28,7 @@ public class StaticJsonScripts {
 								.then().log().all().assertThat().statusCode(200).body("Msg", equalTo("successfully added")).extract().response().asString();
 		System.out.println(addBookResponse);
 		
-		JsonPath jsp = new Library().rawToJson(addBookResponse);
+		JsonPath jsp = new JsonPath(addBookResponse);
 		
 		String id = jsp.get("ID");
 		
