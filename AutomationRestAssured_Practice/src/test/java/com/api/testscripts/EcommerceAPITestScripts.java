@@ -7,6 +7,11 @@ import com.api.ecommercePojo.LoginRequest;
 import com.api.ecommercePojo.LoginResponse;
 import com.api.ecommercePojo.Order;
 import com.api.ecommercePojo.OrderDetails;
+import com.api.ecommercePojo.ecom.AddProductResponse;
+import com.api.ecommercePojo.ecom.DataDetails;
+import com.api.ecommercePojo.ecom.OrderGetResponse;
+import com.api.ecommercePojo.ecom.OrdersResponse;
+import com.api.pojo.getresponse.Data;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -23,6 +28,8 @@ public class EcommerceAPITestScripts {
 	
 	@Test
 	public void ecommerceAPITest() {
+		
+		
 		
 		RequestSpecification res = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com").setContentType(ContentType.JSON).build();
 		
@@ -51,11 +58,12 @@ public class EcommerceAPITestScripts {
 												   .param("productFor", "women")
 												   .multiPart("productImage", new File("D://API Automation//API Autmation Using Rest Assured//Section 9 , 10- Oauth 2.0//ClientCredential.png"));
 		
-		String addProductResponse = addProductReq.when().post("/api/ecom/product/add-product")
-				                                 .then().log().all().extract().response().asString();
+		AddProductResponse addProductResponse = addProductReq.when().post("/api/ecom/product/add-product")
+				                                 .then().log().all().extract().response().as(AddProductResponse.class);
 		
-		JsonPath jsp = new JsonPath(addProductResponse);
-		String productId = jsp.get("productId");
+		//JsonPath jsp = new JsonPath(addProductResponse);
+		//String productId = jsp.get("productId");
+		String productId = addProductResponse.getProductId();
 		System.out.println(productId);
 		
 		//Creater Order
@@ -75,26 +83,56 @@ public class EcommerceAPITestScripts {
 		
 		RequestSpecification createOrderReq = given().log().all().spec(createOrderBaseReq).body(orders);
 		
-		String AddOrderResponse = createOrderReq.when().post("/api/ecom/order/create-order")
-				                      .then().log().all().extract().response().asString();
+		OrdersResponse AddOrderResponse = createOrderReq.when().post("/api/ecom/order/create-order")
+				                      .then().log().all().extract().response().as(OrdersResponse.class);
+				              					                        
+				                     // OrdersResponse	                      //.as(OrdersResponse.class);
 		
-		System.out.println(AddOrderResponse);
+		//System.out.println(AddOrderResponse);
 		
-		JsonPath jsp3 = new JsonPath(AddOrderResponse);
+		//JsonPath jsp3 = new JsonPath(AddOrderResponse);
 		
-		String orderId =jsp3.get("orders[0]");
+		//String orderId =jsp3.get("orders[0]");
 		
-		System.out.println(orderId);
+		//System.out.println("orderId : "+orderId);
+		
+		List<String> orderIds =AddOrderResponse.getOrders();
+		
+		String	orderId1="";
+		for(String ordId : orderIds) {
+		orderId1 =ordId;
+			 
+		}
+		String orderId =orderId1;
+		System.out.println("Second Order ID : "+orderId);
+		
+		//System.out.println(orderId[0]);
 		
 		//View Order Details
 		RequestSpecification viewOrderDetailsBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com").addQueryParam("id", orderId).addHeader("authorization", token).build();
 		
+		//System.out.println("Third Order ID : "+orderId);
+		
 		RequestSpecification viewOrderDetailsReq = given().log().all().spec(viewOrderDetailsBaseReq);
 		
-		String viewOrderDetailsResponse = viewOrderDetailsReq.when().get("/api/ecom/order/get-orders-details")
-				                          .then().log().all().extract().response().asString();
+		OrderGetResponse viewOrderDetailsResponse = viewOrderDetailsReq.when().get("/api/ecom/order/get-orders-details")
+				                          .then().log().all().extract().response().as(OrderGetResponse.class);
 		
-		System.out.println(viewOrderDetailsResponse);
+		String message =viewOrderDetailsResponse.getMessage();
+		System.out.println(message);
+		
+		DataDetails getAllData =viewOrderDetailsResponse.getData();
+		
+        String productName = getAllData.getProductName();
+        String country = getAllData.getCountry();
+        String productDescription = getAllData.getProductDescription();
+        
+        Assert.assertEquals(productName, "Laptop");
+		Assert.assertEquals(country, "India");
+		Assert.assertEquals(productDescription, "Lenevo");
+		
+		
+		/*System.out.println(viewOrderDetailsResponse);
 		
 		JsonPath jsp4 = new JsonPath(viewOrderDetailsResponse);
 		
@@ -111,7 +149,7 @@ public class EcommerceAPITestScripts {
 		
 		Assert.assertEquals(productName, "Laptop");
 		Assert.assertEquals(country, "India");
-		Assert.assertEquals(productDescription, "Lenevo");
+		Assert.assertEquals(productDescription, "Lenevo");*/
 		
 		//Delete Order
 		

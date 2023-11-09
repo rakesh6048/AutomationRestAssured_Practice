@@ -1,10 +1,8 @@
-package com.api.ecommercePojo;
+package com.api.ecommercePojo.ecom;
 
 public class LoginRequest {
-	
+
 	private String userEmail;
-	private String userPassword;
-	
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -17,6 +15,8 @@ public class LoginRequest {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
+	private String userPassword;
+	
 	
 	
 

@@ -33,7 +33,7 @@ public class DynamicJsonScripts {
 	@DataProvider(name="data")
 	public Object[][] getData() {
 		
-		Object obj[][] ={{"absd","2442"},{"fghs","5446"},{"akjhf","7658"}};
+		Object obj[][] ={{"absd","2444"},{"fghs","5446"},{"akjhf","7656"}};
 		
 		return obj;
 	}

@@ -15,7 +15,7 @@ public class PojoTestScripts {
 	public void addBook(){
 		
 		try {
-			AddBook bookDetails = new AddBook("Learn Appium Automation with Java","bklk","298k","John foe");
+			AddBook bookDetails = new AddBook("Learn Appium Automation with Java","bklkd","298fk","John foe");
 			
 			RestAssured.baseURI="http://216.10.245.166";
 			

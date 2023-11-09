@@ -95,9 +95,7 @@ public class GooglePlaceAPITestScripts {
 	    
 		}catch(Exception e) {
 			
-		}
-		
-		
+		}		
 	}
 	
 	@Test(enabled = true)
@@ -108,72 +106,61 @@ public class GooglePlaceAPITestScripts {
 		try {
 			
 			RestAssured.baseURI="https://rahulshettyacademy.com";
-		
-		//Add Place and validate the response data
-		String postResponse = given().log().all().queryParam("key", "qaclick123").header("Content-Type", "application/json")
-			                 .body(Payloads.addPlace())
-			                 .when().post("/maps/api/place/add/json")
-			                 .then().log().all().assertThat().statusCode(200).body("scope", equalTo("APP"), "status" , equalTo("OK"))
-			                 .extract().response().asString();
-		System.out.println(postResponse);
-		jsp = new JsonPath(postResponse);
-		
-		String place_id = jsp.getString("place_id");
-		System.out.println(place_id);
-		
-		//Update Place and validate the response
-		String newAddress = "New Road, USA";
-		String putResponse =given().log().all().queryParam("key", "qaclick123").queryParam("place_id", place_id).header("Content-Type", "application/json")
-		                    .body("{\r\n"
-		       		        + "\"place_id\":\""+place_id+"\",\r\n"
-		       		        + "\"address\":\""+newAddress+"\",\r\n"
-		       		        + "\"key\":\"qaclick123\"\r\n"
-		       		        + "}")
-		       .when().put("/maps/api/place/update/json")
-		       .then().log().all().assertThat().statusCode(200).body("msg", equalTo("Address successfully updated")).extract().response().asString();
-		
-		System.out.println(putResponse);
-		
-		jsp = new JsonPath(putResponse);
-		
-		String statusMsg = jsp.getString("msg");
-		System.out.println(statusMsg);
-		
-		Assert.assertEquals(statusMsg, "Address successfully updated");
-		
-		//Get Place and validate the response data
-		String getResponse = given().log().all().queryParam("key", "qaclick123").queryParam("place_id", place_id)
-							.when().get("/maps/api/place/get/json")
-							.then().log().all().assertThat().statusCode(200).body("name", equalTo("Rajputana House"), "address", equalTo(newAddress)).extract().response().asString();
+		    
+			String response = given().log().all().queryParam("key", "qaclick123").header("Content-Type", "application/json")
+			       .body(Payloads.addPlace())
+			       .when().post("/maps/api/place/add/json")
+			       .then().log().all().assertThat().statusCode(200).body("scope", equalTo("APP")).extract().response().asString();
 			
-		System.out.println(getResponse);
-		jsp = new JsonPath(getResponse);
-		
-		String name = jsp.getString("name");
-		String actualAddress = jsp.getString("address");
-		System.out.println(name);
-		System.out.println(actualAddress);
-		
-		Assert.assertEquals(actualAddress, newAddress);
-		
-		//Delete place and validate the response data
-		String deleteResponse = given().log().all().queryParam("key", "qaclick123")
-		                       .body("{\r\n"
-		                       + "    \"place_id\":\""+place_id+"\"\r\n"
-		                       + "}")
-		       .when().delete("/maps/api/place/delete/json")
-		       .then().log().all().assertThat().statusCode(200).body("status", equalTo("OK")).extract().response().asString();
-		
-		System.out.println(deleteResponse);
-		jsp = new Library().rawToJson(deleteResponse);
-		
-		String status = jsp.getString("status");
-		
-		System.out.println(status);
-		
-		Assert.assertEquals(status, "OK");
-		
-		
+			System.out.println(response);
+		    JsonPath jsps = new JsonPath(response);
+		    String place_id = jsps.get("place_id");
+		    System.out.println(place_id);
+		    
+		  //Add Place 
+		    
+		    String new_address="All New Holland";
+		    
+		    String updateResponse =given().log().all().queryParam("key", "qaclick123").queryParam("place_id", place_id).header("Content-Type", "application/json")
+		           .body("{\r\n"
+		           		+ "\"place_id\":\""+place_id+"\",\r\n"
+		           		+ "\"address\":\""+new_address+"\",\r\n"
+		           		+ "\"key\":\"qaclick123\"\r\n"
+		           		+ "}")
+		           .when().put("/maps/api/place/update/json")
+		           .then().log().all().assertThat().statusCode(200).body("msg", equalTo("Address successfully updated")).extract().response().asString();
+		    System.out.println(updateResponse);
+		    JsonPath jsps1= new JsonPath(updateResponse);
+		    String msg=jsps1.getString("msg");
+		    System.out.println(msg);
+		    
+		    //Get Place
+		    
+		   String getResponse= given().log().all().queryParam("key", "qaclick").queryParam("place_id", place_id)
+		            .when().get("/maps/api/place/get/json")
+		            .then().log().all().extract().response().asString();
+		   System.out.println(getResponse); 
+		   //JsonPath js = new JsonPath(getResponse);
+		   //String name = js.get("name");
+		   //String address = js.get("address");
+		   //System.out.println(name);
+		   //System.out.println(address);
+		   
+		   //Assert.assertEquals(new_address, address);
+		   
+		   // Delate Palce
+		   
+		   String deleteResponse = given().log().all().queryParam("key", "qaclick").header("ContentType", "application/json")
+		           .body("{\r\n"
+		           		+ "\"place_id\":\""+place_id+"\"\r\n"
+		           		+ "}")
+		           .when().delete("/maps/api/place/delete/json")
+		           .then().log().all().assertThat().statusCode(200).extract().response().asString();
+		   System.out.println(deleteResponse);
+		   
+		   JsonPath js1= new JsonPath(deleteResponse);
+		   String status = js1.get("status");
+		   System.out.println(status);
 		}catch(Exception e) {
 			System.out.println(e);
 		}

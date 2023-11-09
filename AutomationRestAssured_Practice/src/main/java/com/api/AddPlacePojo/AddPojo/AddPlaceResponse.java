@@ -1,13 +1,11 @@
-package com.api.AddPlacePojo;
+package com.api.AddPlacePojo.AddPojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AddPlaceResponse {
-	
+
 	private String status;
 	private String place_id;
 	private String scope;
+	private String reference;
 	private String id;
 	
 	public String getStatus() {
@@ -28,10 +26,17 @@ public class AddPlaceResponse {
 	public void setScope(String scope) {
 		this.scope = scope;
 	}
+	public String getReference() {
+		return reference;
+	}
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
+
 }

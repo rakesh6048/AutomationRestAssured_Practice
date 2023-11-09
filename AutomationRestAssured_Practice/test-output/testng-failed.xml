@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.api.testscripts.GraphQLScripts">
+      <class name="com.api.testscripts.practices.DemoAddPlace">
         <methods>
-          <include name="verifyGraphQLMutation"/>
+          <include name="verifyAddPlace"/>
         </methods>
-      </class> <!-- com.api.testscripts.GraphQLScripts -->
+      </class> <!-- com.api.testscripts.practices.DemoAddPlace -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -3,7 +3,9 @@ package com.api.testscripts;
 import org.testng.annotations.Test;
 
 import com.api.AddPlacePojo.AddPlace;
+import com.api.AddPlacePojo.AddPlaceResponse;
 import com.api.AddPlacePojo.Location;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import static io.restassured.RestAssured.given;
 
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.restassured.RestAssured;
+
 
 public class Serialization {
 	
@@ -36,12 +39,16 @@ public class Serialization {
 			
 		RestAssured.baseURI="https://rahulshettyacademy.com";
 		
-		String response = given().log().all().queryParam("key", "qaclick").header("Content-Type", "application/json")
+		AddPlaceResponse res = given().log().all().queryParam("key", "qaclick").header("Content-Type", "application/json")
 		                 .body(a1)
-		                 .when().post("/maps/api/place/add/json")
-		                 .then().log().all().assertThat().statusCode(200).extract().response().asString();
+		                 .when().post("https://rahulshettyacademy.com/maps/api/place/add/json").as(AddPlaceResponse.class);
+		                 
+		                 //.then().log().all().assertThat().statusCode(200).extract().response().asString().as(AddPlace.class);
 		
-		System.out.println(response);
+		String status = res.getStatus();
+		System.out.println(status);
+		System.out.println(res.getPlace_id());
+		
 		
 		//create the pojo class for the response
 		/*"{\r\n"
@@ -54,7 +61,7 @@ public class Serialization {
 		
 			
 		}catch(Exception e) {
-			System.out.println();
+			System.out.println(e);
 		}
 		
 	}

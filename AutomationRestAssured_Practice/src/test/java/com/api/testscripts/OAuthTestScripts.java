@@ -18,6 +18,7 @@ import com.api.getCoursesPojo.WebAutomation;
 import groovyjarjarantlr.collections.List;
 import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.ResponseBodyExtractionOptions;
 
 public class OAuthTestScripts {
 	
@@ -46,8 +47,7 @@ public class OAuthTestScripts {
 			
 			String url = driver.getCurrentUrl();*/
 			
-			String url = "https://rahulshettyacademy.com/getCourse.php?code=4%2F0Adeu5BWBbAw916IlYB9vqK9RonawmitPhV_XHOBnvYceSPpJq7ZkBMImqvnkjhvIhcc8Qw&scope=email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt=none";
-			
+			String url = "https://rahulshettyacademy.com/getCourse.php?code=4%2F0AfJohXkUW9vsIscwWwZ5btuMoA6tspJ0mnuyqSUE1kcgzTUx03Jcpr0ufhls3-_yt0x7Tg&scope=email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=none";
 		    String partialCode = url.split("code=")[1];
 		    String code = partialCode.split("&scope")[0];
 		    System.out.println(code);
@@ -70,10 +70,9 @@ public class OAuthTestScripts {
 			
 			
 		//Get the actual response as all course price
-		GetCourses gc=given().log().all().queryParam("access_token", accesstoken).expect().defaultParser(Parser.JSON)
+		GetCourses gc= given().log().all().queryParam("access_token", accesstoken).expect().defaultParser(Parser.JSON)
 	    		 				  .when()
 	    		 				  .get("https://rahulshettyacademy.com/getCourse.php").as(GetCourses.class);
-			
 			
 			//start extract data from pojo class
 		
